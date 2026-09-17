@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Coffee Wall</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <header id="header-container">
+            <div id="header-left">
+                <a id="header-title" href="index.html">MY COFFEE WALL</a>
+            </div>
+
+            <span id="header-tag">@madgarv</span>
+        </header>
+
+        <main id="wall-page">
+            <div id="wall-grid"></div>
+        </main>
+
+        <label id="add-wall-images" for="wall-image-input">+</label>
+
+        <input
+            id="wall-image-input"
+            type="file"
+            accept="image/*"
+            multiple
+        >
+
+        <p id="wall-status"></p>
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="supabase-config.js"></script>
+        <script src="coffee-api.js"></script>
+        <script src="wall.js"></script>
+    </body>
+</html>

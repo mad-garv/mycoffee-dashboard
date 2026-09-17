@@ -162,3 +162,75 @@ async function deleteCoffee(coffee) {
         }
     }
 }
+
+async function listWallImages() {
+    var result = await supabaseClient
+        .from("coffee_wall_images")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (result.error) {
+        throw result.error;
+    }
+
+    var wallImages = [];
+
+    for (var i = 0; i < result.data.length; i++) {
+        wallImages.push({
+            id: result.data[i].id,
+            imagePath: result.data[i].image_path,
+            image: getCoffeeImageUrl(result.data[i].image_path)
+        });
+    }
+
+    return wallImages;
+}
+
+async function uploadWallImages(files) {
+    var user = await requireUser();
+    var uploadedImages = [];
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var extension = file.name.split(".").pop() || "jpg";
+
+        var imagePath =
+            user.id +
+            "/wall/" +
+            crypto.randomUUID() +
+            "." +
+            extension;
+
+        var uploadResult = await supabaseClient.storage
+            .from("coffee-images")
+            .upload(imagePath, file, {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: file.type
+            });
+
+        if (uploadResult.error) {
+            throw uploadResult.error;
+        }
+
+        var databaseResult = await supabaseClient
+            .from("coffee_wall_images")
+            .insert({
+                image_path: imagePath
+            })
+            .select()
+            .single();
+
+        if (databaseResult.error) {
+            await supabaseClient.storage
+                .from("coffee-images")
+                .remove([imagePath]);
+
+            throw databaseResult.error;
+        }
+
+        uploadedImages.push(databaseResult.data);
+    }
+
+    return uploadedImages;
+}
