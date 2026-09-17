@@ -586,9 +586,17 @@ body {
     justify-content: center;
 }
 
-#manage-log {
+#manage-log,
+#header-title {
   color: inherit;
   text-decoration: none;
+}
+
+#wall-link {
+    color: inherit;
+    text-decoration: none;
+    opacity: 50%;
+
 }
 
 #wall-page {
