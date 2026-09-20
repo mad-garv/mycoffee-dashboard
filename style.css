@@ -612,19 +612,19 @@ body {
 
     display: grid;
 
-    grid-template-columns: repeat(6, 1fr);
-
-    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 320px;
 
     gap: 0;
 
     margin: 0;
     padding: 0;
 
-    z-index: 0;
-    pointer-events: none;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    overflow: hidden;
+    z-index: 0;
+    pointer-events: auto;
 }
 
 
@@ -648,7 +648,7 @@ body {
 
     border-radius: 0;
 
-    opacity: 0.35;
+    opacity: 0.7;
 }
 
 
@@ -670,6 +670,15 @@ body {
 #wall-status,
 #wall-content {
     position: relative;
+    z-index: 10;
+}
+
+.wall-page #header-container {
+    position: fixed;
+    top: 0;
+
+    width: 90%;
+
     z-index: 10;
 }
 
@@ -703,6 +712,7 @@ body {
     cursor: pointer;
     font-size: 34px;
     line-height: 1;
+    z-index: 10;
 }
 
 #add-wall-images:hover {
@@ -716,12 +726,13 @@ body {
     margin: 0;
     color: #5b3420;
     font-size: 14px;
+    z-index: 10;
 }
 
 /* Large screens */
 @media (min-width: 1200px) {
     #wall-grid {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
@@ -729,7 +740,7 @@ body {
 /* Medium screens */
 @media (min-width: 768px) and (max-width: 1199px) {
     #wall-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, 1fr);        
     }
 }
 
@@ -737,6 +748,6 @@ body {
 /* Phones */
 @media (max-width: 767px) {
     #wall-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);        
     }
 }
