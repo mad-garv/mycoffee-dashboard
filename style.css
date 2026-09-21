@@ -627,6 +627,17 @@ body {
     pointer-events: auto;
 }
 
+.log-page #wall-grid {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 
 /* Each individual image */
 
@@ -663,7 +674,7 @@ body {
 }
 
 
-/* Keep your header/content above the wall */
+/* header/content above the wall */
 
 #header-container,
 #add-wall-images,
@@ -671,6 +682,14 @@ body {
 #wall-content {
     position: relative;
     z-index: 10;
+}
+
+header,
+#hero,
+#coffee-container,
+#coffee-modal {
+    position: relative;
+    z-index: 1;
 }
 
 .wall-page #header-container {

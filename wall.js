@@ -26,12 +26,19 @@ async function loadWall() {
             createWallImage(images[i]);
         }
     } catch (error) {
-        wallStatus.textContent = "Could not load the coffee wall.";
+        if (wallStatus) {
+            wallStatus.textContent = "Could not load the coffee wall.";
+        }
+
         console.error(error);
     }
 }
 
 async function updateWallControls() {
+    if (!addWallImagesButton) {
+        return;
+    }
+
     var result = await supabaseClient.auth.getUser();
     var user = result.data.user;
 
@@ -40,30 +47,32 @@ async function updateWallControls() {
     }
 }
 
-wallImageInput.addEventListener("change", async function () {
-    var files = Array.from(wallImageInput.files);
+if (wallImageInput) {
+    wallImageInput.addEventListener("change", async function () {
+        var files = Array.from(wallImageInput.files);
 
-    if (files.length === 0) {
-        return;
-    }
+        if (files.length === 0) {
+            return;
+        }
 
-    try {
-        addWallImagesButton.classList.add("uploading");
-        addWallImagesButton.textContent = "…";
-        wallStatus.textContent = "Uploading " + files.length + " photo(s)…";
+        try {
+            addWallImagesButton.classList.add("uploading");
+            addWallImagesButton.textContent = "…";
+            wallStatus.textContent = "Uploading " + files.length + " photo(s)…";
 
-        await uploadWallImages(files);
+            await uploadWallImages(files);
 
-        wallImageInput.value = "";
-        wallStatus.textContent = "";
-        await loadWall();
-    } catch (error) {
-        wallStatus.textContent = "Could not upload: " + error.message;
-    } finally {
-        addWallImagesButton.classList.remove("uploading");
-        addWallImagesButton.textContent = "+";
-    }
-});
+            wallImageInput.value = "";
+            wallStatus.textContent = "";
+            await loadWall();
+        } catch (error) {
+            wallStatus.textContent = "Could not upload: " + error.message;
+        } finally {
+            addWallImagesButton.classList.remove("uploading");
+            addWallImagesButton.textContent = "+";
+        }
+    });
+}
 
 updateWallControls();
 loadWall();
